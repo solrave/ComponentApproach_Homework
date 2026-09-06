@@ -4,6 +4,7 @@ namespace Game
 {
     public sealed class LookComponent : MonoBehaviour
     {
+        private float _angle;
         public void Look(Transform target)
         {
             Vector2 direction = target.position - this.transform.position;
@@ -12,8 +13,17 @@ namespace Game
         
         public void Look(float direction)
         {
-            float angle = direction > 0 ? 0 : 180;
-            this.transform.eulerAngles = new Vector3(0, angle, 0);
+            if (direction > 0)
+            {
+                _angle = 0f;
+            }
+
+            if (direction < 0)
+            {
+                _angle = 180f;
+            }
+            
+            this.transform.eulerAngles = new Vector3(0, _angle, 0);
         }
     }
 }

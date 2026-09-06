@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class TakeDamageColorComponent : MonoBehaviour
+    public sealed class DamageAnimator : MonoBehaviour
     {
         [SerializeField]
         private SpriteRenderer[] _renderers;

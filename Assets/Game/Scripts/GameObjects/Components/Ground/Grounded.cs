@@ -5,9 +5,13 @@ using Sirenix.OdinInspector;
 namespace Game
 {
     [Serializable]
-    public sealed class GroundedComponent : MonoBehaviour
+    public sealed class Grounded : MonoBehaviour
     {
         public event Action<bool> OnGrounded;
+        
+        public Transform Ground => _ground;
+        
+        public bool IsGrounded => _isGrounded;
         
         [SerializeField]
         private Transform _feet;
@@ -24,12 +28,15 @@ namespace Game
         [ShowInInspector, ReadOnly, HideInEditorMode]
         private bool _isGrounded;
 
-        public Transform Ground => _ground;
-        
-        public bool IsGrounded => _isGrounded;
+        private Func<bool> _condition;
+
+        public void SetCondition(Func<bool> condition) => _condition = condition;
         
         private void FixedUpdate()
         {
+            if (_condition == null || !_condition())
+                return;
+            
             RaycastHit2D hit = Physics2D.Raycast(_feet.position, Vector2.down, _groundDistance, _layerMask);
 
             bool grounded = hit;
