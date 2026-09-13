@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace Game
 {
-    public class MoveView : MonoBehaviour
+    public class MoveComponentView : MonoBehaviour
     {
         private int MOVING = Animator.StringToHash("IsMoving");
         
-        private MoveRequest _moveRequest;
+        private MoveComponent _moveComponent;
         private Animator _animator;
         
         private void OnEnable()
         {
-            _moveRequest = GetComponent<MoveRequest>();
+            _moveComponent = GetComponentInParent<MoveComponent>();
             _animator = GetComponentInChildren<Animator>();
         }
 
         private void Update()
         {
-            _animator.SetBool(MOVING, _moveRequest.IsMoving);
+            _animator.SetBool(MOVING, _moveComponent.IsMoving);
         }
     }
 }

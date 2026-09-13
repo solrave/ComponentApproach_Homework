@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private GameObject _character;
+    [SerializeField] 
+    private GameObject _character;
 
     private void Update()
     {
@@ -18,20 +19,17 @@ public class InputController : MonoBehaviour
             _moveDirection.x = 1;
         else if(Input.GetKey(KeyCode.A))
             _moveDirection.x = -1;
-        
-        if (Input.GetKey(KeyCode.Space))
-            _moveDirection.y = 1;
 
         if (_moveDirection != Vector3.zero)
-            _character.GetComponent<MoveRequest>().Move(_moveDirection);
+            _character.GetComponent<MoveComponent>().Move(_moveDirection);
 
         if (Input.GetKeyDown(KeyCode.Space))
-            _character.GetComponent<JumpRequest>().JumpUp();
+            _character.GetComponent<JumpComponent>().Jump();
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
-            _character.GetComponent<PushRequest>().Push();
+            _character.GetComponent<DirectPushComponent>().Push();
         
         if (Input.GetKeyDown(KeyCode.Mouse1))
-            _character.GetComponent<FlipRequest>().Flip();
+            _character.GetComponent<FlipComponent>().Flip();
     }
 }

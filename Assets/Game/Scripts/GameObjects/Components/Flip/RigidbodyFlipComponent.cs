@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
 {
-    public class FlipAbility : MonoBehaviour
+    public class RigidbodyFlipComponent : MonoBehaviour
     {
+        public event Action OnFlip;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _forceX;
@@ -25,6 +27,8 @@ namespace Game
             {
                 target.AddForceAtPosition(direction, target.position, ForceMode2D.Impulse);
             }
+            
+            OnFlip?.Invoke();
         }
     }
 }

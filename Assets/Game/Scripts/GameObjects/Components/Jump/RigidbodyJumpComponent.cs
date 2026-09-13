@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class JumpAbility : MonoBehaviour
+    public class RigidbodyJumpComponent : MonoBehaviour
     {
         [SerializeField] private float _force;
         

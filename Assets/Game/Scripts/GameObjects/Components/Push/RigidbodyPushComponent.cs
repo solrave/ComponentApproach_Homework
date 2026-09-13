@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Game
 {
-    public class PushAbility : MonoBehaviour
+    public class RigidbodyPushComponent : MonoBehaviour
     {
+        public event Action OnPush;
         [SerializeField] private Transform _firePoint;
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private float _forceX;
@@ -16,6 +17,15 @@ namespace Game
         private void OnEnable()
         {
             _body = GetComponent<Rigidbody2D>();
+        }
+
+        public void Push(Rigidbody2D obj)
+        {
+            if (!obj) return;
+            
+            var direction = (obj.position - _body.position).normalized;
+            var force = new Vector2(direction.x * _forceX, _forceY);
+            obj.AddForceAtPosition(force, obj.position, ForceMode2D.Impulse);
         }
 
         public void Push()
@@ -32,6 +42,8 @@ namespace Game
             {
                 target.AddForceAtPosition(direction, target.position, ForceMode2D.Impulse);
             }
+            
+            OnPush?.Invoke();
         }
     }
 }

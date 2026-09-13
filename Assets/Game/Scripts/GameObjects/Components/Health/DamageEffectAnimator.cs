@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class DamageAnimator : MonoBehaviour
+    public sealed class DamageEffectAnimator : MonoBehaviour
     {
         [SerializeField]
         private SpriteRenderer[] _renderers;

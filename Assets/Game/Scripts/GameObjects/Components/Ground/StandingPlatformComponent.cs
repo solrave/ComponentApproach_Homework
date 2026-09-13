@@ -5,7 +5,7 @@ namespace Game
     public sealed class StandingPlatformComponent : MonoBehaviour
     {
         [SerializeField]
-        private Grounded _grounded;
+        private GroundedComponent _groundedComponent;
 
         private Transform _currentGround;
         
@@ -29,7 +29,7 @@ namespace Game
 
         private bool IsStanding(out Transform platform)
         {
-            platform = _grounded.Ground;
+            platform = _groundedComponent.Ground;
             return platform && platform.CompareTag(GameObjectTags.Platform);
         }
     }

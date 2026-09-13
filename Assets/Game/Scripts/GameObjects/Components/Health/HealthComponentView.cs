@@ -2,12 +2,12 @@
 
 namespace Game
 {
-    [RequireComponent(typeof(DamageAnimator))]
-    public class HealthView : MonoBehaviour
+    [RequireComponent(typeof(DamageEffectAnimator))]
+    public class HealthComponentView : MonoBehaviour
     {
         private int DEATH = Animator.StringToHash("Death");
-        private Health _health;
-        private DamageAnimator _damageAnimator;
+        private HealthComponent _healthComponent;
+        private DamageEffectAnimator _damageEffectAnimator;
         private Animator _animator;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _damageSound;
@@ -15,22 +15,22 @@ namespace Game
         private void OnEnable()
         {
             _animator = GetComponentInChildren<Animator>();
-            _health = GetComponentInParent<Health>();
-            _damageAnimator = GetComponent<DamageAnimator>();
-            _health.OnDamage += this.OnDamage;
+            _healthComponent = GetComponentInParent<HealthComponent>();
+            _damageEffectAnimator = GetComponent<DamageEffectAnimator>();
+            _healthComponent.OnDamage += this.OnDamage;
         }
 
         private void OnDisable()
         {
-            _health.OnDamage -= this.OnDamage;
+            _healthComponent.OnDamage -= this.OnDamage;
         }
 
         private void OnDamage()
         {
-            _damageAnimator.TakeDamage();
+            _damageEffectAnimator.TakeDamage();
             _audioSource.PlayOneShot(_damageSound);
             
-            if (_health.IsDead)
+            if (_healthComponent.IsDead)
                 _animator.SetTrigger(DEATH);
         }
     }

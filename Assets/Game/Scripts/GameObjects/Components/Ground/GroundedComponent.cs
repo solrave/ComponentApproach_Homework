@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 namespace Game
 {
     [Serializable]
-    public sealed class Grounded : MonoBehaviour
+    public sealed class GroundedComponent : MonoBehaviour
     {
         public event Action<bool> OnGrounded;
         
