@@ -1,25 +1,25 @@
-﻿using System;
-using Game.Scripts.GameObjects.Content.Spider;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 namespace Game
 {
     public class PatrolComponent : MonoBehaviour
     {
-        [SerializeField] private Transform[] _patrolPoints;
-        [SerializeField] private float _stoppingDistance;
-        [SerializeField] private Spider _spider;
-        private MoveComponent _moveComponent;
-        private int _currentIndex;
-        private Vector2 _direction;
-        private Transform _target;
-        private bool IsReached => _direction.sqrMagnitude <= _stoppingDistance;
+        public Vector2 Direction { get; private set; }
+        
+        [SerializeField]
+        private Transform[] _patrolPoints;
+        
+        [SerializeField] 
+        private float _stoppingDistance;
 
+        private int _currentIndex;
+        private Transform _target;
+        private bool _hasTargets;
+        
         private void Awake()
         {
-            _moveComponent = GetComponent<MoveComponent>();
-            if (_patrolPoints is not null && _patrolPoints.Length > 0)
+            _hasTargets = _patrolPoints is not null && _patrolPoints.Length > 0;
+            if (_hasTargets)
             {
                 foreach (var point in _patrolPoints)
                 {
@@ -28,24 +28,36 @@ namespace Game
             }
             else
             {
-                Debug.LogWarning("There is no patrol points in the list!");
+                Debug.LogWarning("There is no patrol points in the list!", this);
+                Direction = Vector2.zero;
             }
         }
 
-        private void Update()
+        public void UpdateDirection()
         {
-            Patrol();
+            if (!_hasTargets) 
+                return;
+            
+            _target = _patrolPoints[_currentIndex];
+            
+            if (!_target)
+            {
+                Direction = Vector2.zero;
+                return;
+            }
+
+            var offset = _target.position - this.transform.position;
+           
+            if (offset.sqrMagnitude <= _stoppingDistance * _stoppingDistance)
+            {
+                _currentIndex = (_currentIndex + 1) % _patrolPoints.Length;
+                Direction = Vector2.zero;
+                return;
+            }
+
+            Direction = offset.normalized;
         }
 
-        private void Patrol()
-        {
-            _target = _patrolPoints[_currentIndex];
-            _direction = _target.position - this.transform.position;
-            
-                if (!IsReached)
-                    _moveComponent?.Move(_direction.normalized);
-                else
-                    _currentIndex = (_currentIndex + 1) % _patrolPoints.Length;
-        }
+        public void ReleaseDirection() => Direction = Vector2.zero;
     }
 }

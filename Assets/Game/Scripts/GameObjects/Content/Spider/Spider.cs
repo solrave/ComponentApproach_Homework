@@ -11,7 +11,7 @@ namespace Game.Scripts.GameObjects.Content.Spider
     {
         [SerializeField] 
         private float _damage;
-        
+
         private PatrolComponent _patrolComponent;
         private MoveComponent _moveComponent;
         private TransformMoveComponent _transformMoveComponent;
@@ -49,22 +49,33 @@ namespace Game.Scripts.GameObjects.Content.Spider
             
             _knockbackPushComponent.SetAction(this);
             _knockbackPushComponent.SetCondition(this);
-            //
-            // _pushRequest.SetAction(this);
-            // _pushRequest.SetCondition(this);
         }
 
         private void OnEnable()
         {
-            _collisionComponent.OnEntered += this.OnEntered;
+            _healthComponent.OnDied += this.OnDied;
+            _collisionComponent.OnEntered += this.OnCollision;
         }
 
         private void OnDisable()
         {
-            _collisionComponent.OnEntered -= this.OnEntered;
+            _healthComponent.OnDied -= this.OnDied;
+            _collisionComponent.OnEntered -= this.OnCollision;
         }
 
-        private void OnEntered(Collision2D obj)
+        private void Update()
+        {
+            _patrolComponent.UpdateDirection();
+            
+            if (_patrolComponent.Direction != Vector2.zero)
+            {
+                _moveComponent.Move(_patrolComponent.Direction);
+            }
+        }
+
+        private void OnDied() => Destroy(this.gameObject);
+
+        private void OnCollision(Collision2D obj)
         {
             if (obj.collider.TryGetComponent<Rigidbody2D>(out var body))
                 _knockbackPushComponent.Push(body);
@@ -73,7 +84,6 @@ namespace Game.Scripts.GameObjects.Content.Spider
                 || !health.IsAlive) return;
             
             health.TakeDamage(_damage);
-            
         }
 
         void MoveComponent.IAction.Invoke(Vector2 direction)

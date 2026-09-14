@@ -569,7 +569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b4c715012943db9fdf26735a9e7876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.MoveTransform
-  _speed: 0.1
+  _speed: 1
 --- !u!114 &5039349239307359560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -586,7 +586,6 @@ MonoBehaviour:
   - {fileID: 330482538772977516}
   - {fileID: 5737562046146701280}
   _stoppingDistance: 0.1
-  _spider: {fileID: 7321799632411619486}
 --- !u!114 &948718058939111011
 MonoBehaviour:
   m_ObjectHideFlags: 0
