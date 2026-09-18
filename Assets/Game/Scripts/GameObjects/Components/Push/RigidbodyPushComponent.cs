@@ -43,7 +43,7 @@ namespace Game
             _directionLeft = - transform.right;
         }
 
-        public void PushAway(Rigidbody2D obj)
+        public void PushKnockback(Rigidbody2D obj)
         {
             if (!obj) return;
 
@@ -62,7 +62,8 @@ namespace Game
             
             foreach (var target in rigidbodies)
             {
-                target.AddForceAtPosition(_force, target.position, ForceMode2D.Impulse);
+                var direction = target.position - (Vector2)transform.position;
+                target.AddForceAtPosition(direction *_force, target.position, ForceMode2D.Impulse);
             }
             
             OnSinglePush?.Invoke();
@@ -93,7 +94,6 @@ namespace Game
                         hit.collider.attachedRigidbody.position, ForceMode2D.Impulse);
                 }
             }
-            
             OnSidewayPush?.Invoke();
         }
     }

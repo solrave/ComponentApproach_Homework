@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Content.Trap
 {
@@ -15,8 +14,9 @@ namespace Game.Scripts.GameObjects.Content.Trap
         private void OnEnable()
         {
             _collisionComponent = GetComponent<CollisionComponent>();
-            _collisionComponent.OnEntered += this.OnEntered;
             _healthComponent = GetComponent<HealthComponent>();
+            
+            _collisionComponent.OnEntered += this.OnEntered;
             _healthComponent.OnDied += this.Die;
         }
 

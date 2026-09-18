@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Content.Spider
 {
@@ -96,7 +95,7 @@ namespace Game.Scripts.GameObjects.Content.Spider
                                                     _groundedComponent.IsGrounded;
 
         void KnockbackPushComponent.IAction.Invoke(Rigidbody2D target) 
-            => _rigidbodyPushComponent.PushAway(target);
+            => _rigidbodyPushComponent.PushKnockback(target);
 
         bool KnockbackPushComponent.ICondition.Evaluate()
             => _healthComponent.IsAlive;

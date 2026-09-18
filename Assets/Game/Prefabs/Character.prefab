@@ -156,7 +156,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 8
-  _groundDistance: 0.15
+  _groundDistance: 0.2
 --- !u!114 &8752250081366675730
 MonoBehaviour:
   m_ObjectHideFlags: 0

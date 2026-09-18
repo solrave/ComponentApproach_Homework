@@ -57,7 +57,5 @@ namespace Game
 
             Direction = offset.normalized;
         }
-
-        public void ReleaseDirection() => Direction = Vector2.zero;
     }
 }

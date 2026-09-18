@@ -14,6 +14,7 @@ namespace Game
         private void OnTriggerEntered(Collider2D col)
         {
             HealthComponent healthComponent = col.GetComponentInParent<HealthComponent>();
+            
             if (healthComponent != null)
                 healthComponent.SetZero();
         }
