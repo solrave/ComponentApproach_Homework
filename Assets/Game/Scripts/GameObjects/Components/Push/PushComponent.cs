@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    public class DirectPushComponent : MonoBehaviour
+    public class PushComponent : MonoBehaviour
     {
         public interface IAction
         {

@@ -27,7 +27,7 @@ public class InputController : MonoBehaviour
             _character.GetComponent<JumpComponent>().Jump();
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
-            _character.GetComponent<DirectPushComponent>().Push();
+            _character.GetComponent<PushComponent>().Push();
         
         if (Input.GetKeyDown(KeyCode.Mouse1))
             _character.GetComponent<FlipComponent>().Flip();

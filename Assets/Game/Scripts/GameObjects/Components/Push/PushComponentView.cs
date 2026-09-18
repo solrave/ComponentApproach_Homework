@@ -23,15 +23,17 @@ namespace Game
         {
             _animator = GetComponentInChildren<Animator>();
             _rigidbodyPushComponent = GetComponentInParent<RigidbodyPushComponent>();
-            _rigidbodyPushComponent.OnPush += this.AnimatePush;
+            _rigidbodyPushComponent.OnSinglePush += this.AnimateSinglePush;
+            _rigidbodyPushComponent.OnSidewayPush += this.AnimateSidewayPush;
         }
 
         private void OnDisable()
         {
-            _rigidbodyPushComponent.OnPush -= this.AnimatePush;
+            _rigidbodyPushComponent.OnSinglePush -= this.AnimateSinglePush;
+            _rigidbodyPushComponent.OnSidewayPush -= this.AnimateSidewayPush;
         }
 
-        private void AnimatePush()
+        private void AnimateSinglePush()
         {
             _animator.SetTrigger(PUSH);
             
@@ -39,6 +41,21 @@ namespace Game
                 _pushVFX.Play();
             
             _audioSource.PlayOneShot(_pushSFX);
+        }
+        
+        private void AnimateSidewayPush()
+        {
+            if (!_pushVFX) return;
+            
+            Vector2 basePos = _rigidbodyPushComponent.transform.position;
+            var vfxPositionRight = new Vector2(basePos.x + 0.5f, basePos.y);
+            var vfxPositionLeft = new Vector2(basePos.x - 0.5f, basePos.y);
+            var rightPuff = Instantiate(_pushVFX, vfxPositionRight, Quaternion.identity);
+            var leftPuff = Instantiate(_pushVFX, vfxPositionLeft, Quaternion.Euler(0f, 180f, 0f));
+            rightPuff.Play();
+            leftPuff.Play();
+            Destroy(rightPuff.gameObject, rightPuff.main.duration);
+            Destroy(leftPuff.gameObject, leftPuff.main.duration);
         }
     }
 }

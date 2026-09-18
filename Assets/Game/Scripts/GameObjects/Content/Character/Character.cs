@@ -6,8 +6,8 @@ public class Character : MonoBehaviour,
                          MoveComponent.ICondition,
                          JumpComponent.IAction,
                          JumpComponent.ICondition,
-                         DirectPushComponent.IAction,
-                         DirectPushComponent.ICondition,
+                         PushComponent.IAction,
+                         PushComponent.ICondition,
                          FlipComponent.IAction,
                          FlipComponent.ICondition
 {
@@ -19,7 +19,7 @@ public class Character : MonoBehaviour,
     private GroundedComponent _groundedComponent;
     private JumpComponent _jumpComponent;
     private RigidbodyJumpComponent _rigidbodyJumpComponent;
-    private DirectPushComponent _directPushComponent;
+    private PushComponent _pushComponent;
     private RigidbodyPushComponent _rigidbodyPushComponent;
     private FlipComponent _flipComponent;
     private RigidbodyFlipComponent _rigidbodyFlipComponent;
@@ -32,7 +32,7 @@ public class Character : MonoBehaviour,
         _moveComponent = GetComponent<MoveComponent>();
         _transformMoveComponent = GetComponent<TransformMoveComponent>();
 
-        _directPushComponent = GetComponent<DirectPushComponent>();
+        _pushComponent = GetComponent<PushComponent>();
         _rigidbodyPushComponent = GetComponent<RigidbodyPushComponent>();
         
         _flipComponent = GetComponent<FlipComponent>();
@@ -50,8 +50,8 @@ public class Character : MonoBehaviour,
         _jumpComponent.SetAction(this);
         _jumpComponent.SetCondition(this);
         
-        _directPushComponent.SetAction(this);
-        _directPushComponent.SetCondition(this);
+        _pushComponent.SetAction(this);
+        _pushComponent.SetCondition(this);
         
         _flipComponent.SetAction(this);
         _flipComponent.SetCondition(this);
@@ -65,13 +65,12 @@ public class Character : MonoBehaviour,
     bool JumpComponent.ICondition.Evaluate() => _healthComponent.IsAlive 
                                                 && _groundedComponent.IsGrounded;
     
-    void DirectPushComponent.IAction.Invoke() => _rigidbodyPushComponent.Push();
-    bool DirectPushComponent.ICondition.Evaluate() => _healthComponent.IsAlive 
-                                                && !_directPushComponent.PushRequested;
+    void PushComponent.IAction.Invoke() => _rigidbodyPushComponent.PushForward();
+    bool PushComponent.ICondition.Evaluate() => _healthComponent.IsAlive 
+                                                && !_pushComponent.PushRequested;
     
     void FlipComponent.IAction.Invoke() => _rigidbodyFlipComponent.Flip();
     bool FlipComponent.ICondition.Evaluate() => _healthComponent.IsAlive
                                                 && _groundedComponent.IsGrounded 
-                                                && !_directPushComponent.PushRequested;
-    
+                                                && !_pushComponent.PushRequested;
 }

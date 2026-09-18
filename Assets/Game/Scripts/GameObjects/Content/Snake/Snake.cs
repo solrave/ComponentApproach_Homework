@@ -83,8 +83,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
             }
             else
             {
-                Debug.Log($"PATROLLING");
-                
                 _patrolComponent.UpdateDirection();
                 if (_patrolComponent.Direction != Vector2.zero)
                     _moveComponent.Move(_patrolComponent.Direction);

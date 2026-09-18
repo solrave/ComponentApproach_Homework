@@ -96,7 +96,7 @@ namespace Game.Scripts.GameObjects.Content.Spider
                                                     _groundedComponent.IsGrounded;
 
         void KnockbackPushComponent.IAction.Invoke(Rigidbody2D target) 
-            => _rigidbodyPushComponent.Push(target);
+            => _rigidbodyPushComponent.PushAway(target);
 
         bool KnockbackPushComponent.ICondition.Evaluate()
             => _healthComponent.IsAlive;
