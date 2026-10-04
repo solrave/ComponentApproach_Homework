@@ -17,7 +17,7 @@ namespace Game
         public bool PushRequested => _pushRequested;
 
         [SerializeField] 
-        private CooldownComponent _cooldown;
+        private Cooldown _cooldown;
         
         private IAction _action;
         private ICondition _condition;

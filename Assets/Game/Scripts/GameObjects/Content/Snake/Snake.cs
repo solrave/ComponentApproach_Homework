@@ -19,7 +19,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
         private LookComponent _lookComponent;
         
         private MoveComponent _moveComponent;
-        private TransformMoveComponent _transformMoveComponent;
         
         private CollisionComponent _collisionComponent;
         private TriggerComponent _triggerComponent;
@@ -37,7 +36,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
             _lookComponent = GetComponent<LookComponent>();
             
             _moveComponent = GetComponent<MoveComponent>();
-            _transformMoveComponent = GetComponent<TransformMoveComponent>();
             
             _collisionComponent = GetComponent<CollisionComponent>();
             _triggerComponent = GetComponent<TriggerComponent>();
@@ -88,7 +86,8 @@ namespace Game.Scripts.GameObjects.Content.Snake
             }
         }
 
-        private void OnDied() => Destroy(this.gameObject);
+        private void OnDied() 
+            => Destroy(this.gameObject);
 
         private void OnCollision(Collision2D obj)
         {
@@ -104,24 +103,17 @@ namespace Game.Scripts.GameObjects.Content.Snake
         private void GetChaseTarget(Collider2D obj)
         {
             if (obj.TryGetComponent<Character>(out var target))
-            {
                 _chaseComponent.SetTarget(target.gameObject);
-            }
         }
         
         private void ReleaseChaseTarget(Collider2D obj)
         {
             if (obj.TryGetComponent<Character>(out var target))
-            {
                 _chaseComponent.SetTarget(null);
-            }
         }
         
         void MoveComponent.IAction.Invoke(Vector2 direction)
-        { 
-            _transformMoveComponent.Move(direction);
-            _lookComponent.Look(direction.x); 
-        }
+            { _lookComponent.Look(direction.x); }
         
         bool MoveComponent.ICondition.Evaluate() 
             => _healthComponent.IsAlive;

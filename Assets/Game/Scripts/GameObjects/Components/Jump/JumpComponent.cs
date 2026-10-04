@@ -17,7 +17,7 @@ namespace Game
         }
         
         [SerializeField]
-        private CooldownComponent _cooldown;
+        private Cooldown _cooldown;
         
         private bool _jumpRequested;
         private ICondition _condition;

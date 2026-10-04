@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Damage;
+using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Content.Monkey
 {
@@ -18,6 +19,8 @@ namespace Game.Scripts.GameObjects.Content.Monkey
         private RigidbodyPushComponent _rigidbodyPushComponent;
         private GroundedComponent _groundedComponent;
         private HealthComponent _healthComponent;
+        private DamageComponent _damageComponent;
+        private TriggerComponent _triggerComponent;
 
         private void Awake()
         {
@@ -33,16 +36,28 @@ namespace Game.Scripts.GameObjects.Content.Monkey
             _jumpComponent.SetAction(this);
             _jumpComponent.SetCondition(this);
             _groundedComponent.SetCondition(() => _healthComponent.IsAlive);
+            _damageComponent = GetComponent<DamageComponent>();
+            _triggerComponent = GetComponentInChildren<TriggerComponent>();
         }
 
+        private void OnEnable()
+        {
+            _triggerComponent.OnEntered += this.OnEntered;
+        }
+
+        private void OnDisable()
+        {
+            _triggerComponent.OnEntered -= this.OnEntered;
+        }
+        
         private void Update()
         {
             _jumpComponent.Jump();
             _pushComponent.Push();
             _lookComponent.Look(_lookTarget);
-            
-            Debug.Log($"Monkey grounded {_groundedComponent.IsGrounded}");
         }
+        
+        private void OnEntered(Collider2D obj) => _damageComponent.Damage(obj);
 
         void PushComponent.IAction.Invoke() => _rigidbodyPushComponent.PushSideways();
 

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class MoveComponent : MonoBehaviour
 {
+    [SerializeField]
+    private float _speed = 4.5f;
+    
     public bool IsMoving { get; private set; }
     
     private IAction _action;
@@ -39,10 +42,18 @@ public class MoveComponent : MonoBehaviour
                    (_condition == null || _condition.Evaluate());
         
         Debug.Log($"{gameObject.name} ({GetType().Name}): {IsMoving}", this);
-        
+
         if (IsMoving)
+        {
+            MoveTransform(_direction);
             _action?.Invoke(_direction);
+        }
         
         _moveRequired = false;
+    }
+
+    private void MoveTransform(Vector2 direction)
+    {
+        this.transform.Translate((Vector3) direction * (_speed * Time.fixedDeltaTime), Space.World);
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Damage;
+using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Content.Spider
 {
@@ -13,8 +14,8 @@ namespace Game.Scripts.GameObjects.Content.Spider
 
         private PatrolComponent _patrolComponent;
         private MoveComponent _moveComponent;
-        private TransformMoveComponent _transformMoveComponent;
         private LookComponent _lookComponent;
+        private DamageComponent _damageComponent;
         
         private CollisionComponent _collisionComponent;
         private TriggerComponent _triggerComponent;
@@ -24,13 +25,13 @@ namespace Game.Scripts.GameObjects.Content.Spider
         
         private KnockbackPushComponent _knockbackPushComponent;
         private RigidbodyPushComponent _rigidbodyPushComponent;
-
+        
         private void Awake()
         {
             _patrolComponent = GetComponent<PatrolComponent>();
             _moveComponent = GetComponent<MoveComponent>();
-            _transformMoveComponent = GetComponent<TransformMoveComponent>();
             _lookComponent = GetComponent<LookComponent>();
+            _damageComponent = GetComponent<DamageComponent>();
 
             _collisionComponent = GetComponent<CollisionComponent>();
             _triggerComponent = GetComponent<TriggerComponent>();
@@ -78,16 +79,12 @@ namespace Game.Scripts.GameObjects.Content.Spider
         {
             if (obj.collider.TryGetComponent<Rigidbody2D>(out var body))
                 _knockbackPushComponent.Push(body);
-            
-            if (!obj.collider.TryGetComponent<HealthComponent>(out var health)
-                || !health.IsAlive) return;
-            
-            health.TakeDamage(_damage);
+
+            _damageComponent.Damage(obj);
         }
 
         void MoveComponent.IAction.Invoke(Vector2 direction)
         {
-            _transformMoveComponent.Move(direction);
             _lookComponent.Look(-direction.x);
         }
 

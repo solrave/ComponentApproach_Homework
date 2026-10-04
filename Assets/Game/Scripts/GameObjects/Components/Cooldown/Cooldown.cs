@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game
 {
     [Serializable]
-    public class CooldownComponent
+    public class Cooldown
     {
         [SerializeField] 
         private float _cooldown;

@@ -17,7 +17,7 @@ namespace Game
         public bool FlipRequested => _flipRequested;
         
         [SerializeField] 
-        private CooldownComponent _cooldown;
+        private Cooldown _cooldown;
         
         private IAction _action;
         private ICondition _condition;

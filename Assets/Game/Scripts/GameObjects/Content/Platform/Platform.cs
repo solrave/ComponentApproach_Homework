@@ -1,15 +1,10 @@
-using Game.Scripts;
 using UnityEngine;
 
 namespace Game
 {
-    public class Platform : MonoBehaviour,
-                            MoveComponent.IAction,
-                            MoveComponent.ICondition
-                           
+    public class Platform : MonoBehaviour
     {
         private MoveComponent _moveComponent;
-        private TransformMoveComponent _transformMoveComponent;
         private PatrolComponent _patrolComponent;
         private CollisionComponent _collisionComponent;
         private Transform _load;
@@ -18,11 +13,7 @@ namespace Game
         {
             _patrolComponent = GetComponent<PatrolComponent>();
             _moveComponent = GetComponent<MoveComponent>();
-            _transformMoveComponent = GetComponent<TransformMoveComponent>();
             _collisionComponent = GetComponent<CollisionComponent>();
-            _moveComponent.SetAction(this);
-            _moveComponent.SetCondition(this);
-            
         }
 
         private void OnEnable()
@@ -58,20 +49,10 @@ namespace Game
         
         private void OnExit(Collision2D obj)
         {
-            if (ApplicationQuit.AppIsClosing) return; //??????????
-            if (!isActiveAndEnabled) return; //??????????
-            if (!obj.transform) return; //??????????
+            if (!obj.transform) return;
             
-            obj.transform.SetParent(null); //??????????
+            obj.transform.SetParent(null);
             _load = null;
-        }
-
-        void MoveComponent.IAction.Invoke(Vector2 direction)
-            => _transformMoveComponent.Move(direction);
-
-        bool MoveComponent.ICondition.Evaluate()
-        {
-            return true;
         }
     }
 }

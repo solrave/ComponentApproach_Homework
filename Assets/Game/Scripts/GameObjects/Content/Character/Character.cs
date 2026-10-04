@@ -12,7 +12,6 @@ public class Character : MonoBehaviour,
                          FlipComponent.ICondition
 {
     private MoveComponent _moveComponent;
-    private TransformMoveComponent _transformMoveComponent;
     private LookComponent _lookComponent;
     private CollisionComponent _collisionComponent;
     private HealthComponent _healthComponent;
@@ -30,7 +29,6 @@ public class Character : MonoBehaviour,
         _jumpComponent = GetComponent<JumpComponent>();
         
         _moveComponent = GetComponent<MoveComponent>();
-        _transformMoveComponent = GetComponent<TransformMoveComponent>();
 
         _pushComponent = GetComponent<PushComponent>();
         _rigidbodyPushComponent = GetComponent<RigidbodyPushComponent>();
@@ -57,20 +55,31 @@ public class Character : MonoBehaviour,
         _flipComponent.SetCondition(this);
     }
 
-    void MoveComponent.IAction.Invoke(Vector2 direction) { _transformMoveComponent.Move(direction);
-                                                           _lookComponent.Look(direction.x); }
-    bool MoveComponent.ICondition.Evaluate() => _healthComponent.IsAlive;
+    void MoveComponent.IAction.Invoke(Vector2 direction)
+        { _lookComponent.Look(direction.x);}
+    
+    bool MoveComponent.ICondition.Evaluate() 
+        => _healthComponent.IsAlive;
 
-    void JumpComponent.IAction.Invoke() => _rigidbodyJumpComponent.JumpUp();
-    bool JumpComponent.ICondition.Evaluate() => _healthComponent.IsAlive 
-                                                && _groundedComponent.IsGrounded;
+    void JumpComponent.IAction.Invoke() 
+        => _rigidbodyJumpComponent.JumpUp();
     
-    void PushComponent.IAction.Invoke() => _rigidbodyPushComponent.PushForward();
-    bool PushComponent.ICondition.Evaluate() => _healthComponent.IsAlive 
-                                                && !_pushComponent.PushRequested;
+    bool JumpComponent.ICondition.Evaluate() 
+        => _healthComponent.IsAlive 
+           && _groundedComponent.IsGrounded;
     
-    void FlipComponent.IAction.Invoke() => _rigidbodyFlipComponent.Flip();
-    bool FlipComponent.ICondition.Evaluate() => _healthComponent.IsAlive
-                                                && _groundedComponent.IsGrounded 
-                                                && !_pushComponent.PushRequested;
+    void PushComponent.IAction.Invoke() 
+        => _rigidbodyPushComponent.PushForward();
+    
+    bool PushComponent.ICondition.Evaluate() 
+        => _healthComponent.IsAlive 
+           && !_pushComponent.PushRequested;
+    
+    void FlipComponent.IAction.Invoke() 
+        => _rigidbodyFlipComponent.Flip();
+    
+    bool FlipComponent.ICondition.Evaluate() 
+        => _healthComponent.IsAlive
+           && _groundedComponent.IsGrounded 
+           && !_pushComponent.PushRequested;
 }

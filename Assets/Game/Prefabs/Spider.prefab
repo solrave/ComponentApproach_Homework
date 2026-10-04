@@ -349,9 +349,9 @@ GameObject:
   - component: {fileID: 7909378046307501084}
   - component: {fileID: 4712869589778229287}
   - component: {fileID: 5203493390424704285}
-  - component: {fileID: 9204728635739327937}
   - component: {fileID: 5039349239307359560}
   - component: {fileID: 948718058939111011}
+  - component: {fileID: 1140909888339262301}
   m_Layer: 8
   m_Name: Spider
   m_TagString: Untagged
@@ -545,6 +545,7 @@ MonoBehaviour:
   _forceX: 10
   _forceY: 1
   _radius: 1
+  _distance: 0
 --- !u!114 &5203493390424704285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,18 +558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd57bb5e4f3d543a8d08987ef6e2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveRequest
---- !u!114 &9204728635739327937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211836127877050331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44b4c715012943db9fdf26735a9e7876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.MoveTransform
   _speed: 1
 --- !u!114 &5039349239307359560
 MonoBehaviour:
@@ -598,6 +587,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bd8ed7bbf274eea99360b8b879f3cb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.LookComponent
+--- !u!114 &1140909888339262301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211836127877050331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0261be06162b46efaf8292df54927e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Damage.DamageComponent
+  _damage: 1
 --- !u!1001 &2657911147315956785
 PrefabInstance:
   m_ObjectHideFlags: 0

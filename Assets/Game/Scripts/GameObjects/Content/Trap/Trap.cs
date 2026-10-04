@@ -1,20 +1,19 @@
-﻿using UnityEngine;
+﻿using Game.Damage;
+using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Content.Trap
 {
     public class Trap : MonoBehaviour
     {
         private CollisionComponent _collisionComponent;
-        
-        [SerializeField] 
-        private float _damage;
-
         private HealthComponent _healthComponent;
+        private DamageComponent _damageComponent;
 
         private void OnEnable()
         {
             _collisionComponent = GetComponent<CollisionComponent>();
             _healthComponent = GetComponent<HealthComponent>();
+            _damageComponent = GetComponent<DamageComponent>();
             
             _collisionComponent.OnEntered += this.OnEntered;
             _healthComponent.OnDied += this.Die;
@@ -30,14 +29,11 @@ namespace Game.Scripts.GameObjects.Content.Trap
 
         private void OnEntered(Collision2D obj)
         {
-            if (!obj.collider.TryGetComponent<HealthComponent>(out var health)
-                || !health.IsAlive) return;
-            
             if (obj.collider.TryGetComponent<Trap>(out var trap))
                 return;
-            
-            health.TakeDamage(_damage);
-            Die();
+
+            if (_damageComponent.Damage(obj))
+                Die();
         }
     }
 }
