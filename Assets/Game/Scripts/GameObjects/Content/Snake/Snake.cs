@@ -12,6 +12,12 @@ namespace Game.Scripts.GameObjects.Content.Snake
 
         [SerializeField]
         private ForceComponent _forceComponent;
+
+        [SerializeField]
+        private TriggerComponent _chaseTrigger;
+        
+        [SerializeField] 
+        private TriggerComponent _hitTrigger;
         
         private GameObject _target;
         private PatrolComponent _patrolComponent;
@@ -19,8 +25,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
         private HealthComponent _healthComponent;
         private LookComponent _lookComponent;
         private MoveComponent _moveComponent;
-        private CollisionComponent _collisionComponent;
-        private TriggerComponent _triggerComponent;
         private GroundedComponent _groundedComponent;
         private DamageComponent _damageComponent;
         
@@ -33,8 +37,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
             _healthComponent = GetComponent<HealthComponent>();
             _lookComponent = GetComponent<LookComponent>();
             _moveComponent = GetComponent<MoveComponent>();
-            _collisionComponent = GetComponentInChildren<CollisionComponent>();
-            _triggerComponent = GetComponentInChildren<TriggerComponent>();
             _groundedComponent = GetComponent<GroundedComponent>();
             _groundedComponent.SetCondition(() => _healthComponent.IsAlive);
             _moveComponent.SetAction(this);
@@ -44,17 +46,17 @@ namespace Game.Scripts.GameObjects.Content.Snake
         private void OnEnable()
         {
             _healthComponent.OnDied += this.OnDied;
-            _collisionComponent.OnEntered += this.OnCollision;
-            _triggerComponent.OnEntered += this.SetChaseTarget;
-            _triggerComponent.OnExited += this.ReleaseChaseTarget;
+            _chaseTrigger.OnEntered += this.SetChaseTarget;
+            _chaseTrigger.OnExited += this.ReleaseChaseTarget;
+            _hitTrigger.OnEntered += this.OnCollision;
         }
 
         private void OnDisable()
         {
             _healthComponent.OnDied -= this.OnDied;
-            _collisionComponent.OnEntered -= this.OnCollision;
-            _triggerComponent.OnEntered -= this.SetChaseTarget;
-            _triggerComponent.OnExited -= this.ReleaseChaseTarget;
+            _chaseTrigger.OnEntered -= this.SetChaseTarget;
+            _chaseTrigger.OnExited -= this.ReleaseChaseTarget;
+            _hitTrigger.OnEntered -= this.OnCollision;
         }
         
         private void Update()
@@ -77,9 +79,9 @@ namespace Game.Scripts.GameObjects.Content.Snake
         private void OnDied() 
             => Destroy(this.gameObject);
 
-        private void OnCollision(Collision2D obj)
+        private void OnCollision(Collider2D obj)
         {
-            _forceComponent.PushKnockback(obj.rigidbody);
+            _forceComponent.PushKnockback(obj.attachedRigidbody);
             _damageComponent.Damage(obj);
         }
         
