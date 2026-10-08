@@ -20,11 +20,8 @@ GameObject:
   - component: {fileID: 4672014486449407818}
   - component: {fileID: 3114409362603211114}
   - component: {fileID: 2196563928184930825}
-  - component: {fileID: 6262169516774872160}
-  - component: {fileID: 145512386201721597}
   - component: {fileID: 7096030840749323279}
-  - component: {fileID: 3386921281305643802}
-  - component: {fileID: 6770516806628542100}
+  - component: {fileID: 8884357379829588797}
   m_Layer: 9
   m_Name: Character
   m_TagString: Character
@@ -126,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27045e469b8dcb841b06c0ced19f7fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
+  _pushComponent: {fileID: 7096030840749323279}
+  _flipComponent: {fileID: 8884357379829588797}
 --- !u!114 &4761538985816211647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,39 +232,7 @@ MonoBehaviour:
   _cooldown:
     _cooldown: 0.25
     _delay: 0.05
---- !u!114 &6262169516774872160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322474405303096178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a1bd779df8b447a8c08f613fd9ef1b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Jump
   _force: 12
---- !u!114 &145512386201721597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322474405303096178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fda1f972a9e149449fea66f3f36f826b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.PushAbility
-  _firePoint: {fileID: 924219655302976567}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  _forceX: 10
-  _forceY: 2
-  _radius: 1.3
-  _distance: 0
 --- !u!114 &7096030840749323279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,29 +245,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8b1cb6afd14f929b83701d9f1d40cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.PushRequest
-  _cooldown:
-    _cooldown: 0.35
-    _delay: 0.15
---- !u!114 &3386921281305643802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3322474405303096178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d01000fa942047c8be9abc54b850c3b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Flip.FlipAbility
   _firePoint: {fileID: 924219655302976567}
   _layerMask:
     serializedVersion: 2
-    m_Bits: 256
-  _forceX: 1
-  _forceY: 10
+    m_Bits: 384
+  _forceX: 10
+  _forceY: 2
   _radius: 1
---- !u!114 &6770516806628542100
+  _distance: 1
+  _cooldown:
+    _cooldown: 0.35
+    _delay: 0.15
+--- !u!114 &8884357379829588797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,9 +265,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3322474405303096178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d88e9b6b7ee47e0b37d3398c47786ba, type: 3}
+  m_Script: {fileID: 11500000, guid: bb8b1cb6afd14f929b83701d9f1d40cc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Flip.FlipRequest
+  m_EditorClassIdentifier: Assembly-CSharp::Game.PushRequest
+  _firePoint: {fileID: 924219655302976567}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 384
+  _forceX: 1
+  _forceY: 10
+  _radius: 0.4
+  _distance: 1
   _cooldown:
     _cooldown: 0.35
     _delay: 0.15
@@ -327,7 +291,6 @@ GameObject:
   - component: {fileID: 4213341860267575370}
   - component: {fileID: 6725674791865910013}
   - component: {fileID: 4277076418857486094}
-  - component: {fileID: 7036867455996690184}
   - component: {fileID: 2229542668177089356}
   - component: {fileID: 7967236584850597492}
   - component: {fileID: 5389239342650268668}
@@ -410,24 +373,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b67161f59d854da2a5ba35a9558a2c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.AbilityView
-  _audioSource: {fileID: 8589338179893557342}
+  _pushComponent: {fileID: 7096030840749323279}
   _pushSFX: {fileID: 8300000, guid: 3dbd84c2bfae847229cd1013f68c0da7, type: 3}
   _pushVFX: {fileID: 6138593199860099477}
---- !u!114 &7036867455996690184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3661016561165312903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6dffd19990d6437cb3855da1d84e36c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Flip.FlipView
-  _audioSource: {fileID: 8589338179893557342}
+  _flipComponent: {fileID: 8884357379829588797}
   _flipSFX: {fileID: 8300000, guid: a2fb8d4706a16468592a6e50aa24de65, type: 3}
   _flipVFX: {fileID: 7825429286214371121}
+  _audioSource: {fileID: 8589338179893557342}
 --- !u!114 &2229542668177089356
 MonoBehaviour:
   m_ObjectHideFlags: 0

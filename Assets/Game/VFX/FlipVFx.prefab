@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8677820784703594570}
   - component: {fileID: 4524160774113954052}
   m_Layer: 9
-  m_Name: TossVFx
+  m_Name: FlipVFx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

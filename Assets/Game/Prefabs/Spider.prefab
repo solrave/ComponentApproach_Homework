@@ -139,6 +139,101 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f35d756fce44eec4c96d06f28c6c59ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundedComponentView
+--- !u!1 &5071029726714744106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7997699724617602894}
+  - component: {fileID: 1991148579564538710}
+  - component: {fileID: 7008954619159923798}
+  - component: {fileID: 5021913993997038256}
+  m_Layer: 7
+  m_Name: CollisionTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7997699724617602894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071029726714744106}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8956073846474739401}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1991148579564538710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071029726714744106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16615f4fd9aa496686de7e8755045b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.CollisionComponent
+--- !u!114 &7008954619159923798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071029726714744106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53bd3481cde748c6a96e2417a23b6532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.TriggerComponent
+--- !u!70 &5021913993997038256
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5071029726714744106}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.04, y: -0.08}
+  m_Size: {x: 1.75, y: 0.74}
+  m_Direction: 1
 --- !u!1 &5519185477449822260
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,18 +435,16 @@ GameObject:
   m_Component:
   - component: {fileID: 8956073846474739401}
   - component: {fileID: 665118816109236324}
-  - component: {fileID: 5514360316074923580}
   - component: {fileID: 7321799632411619486}
   - component: {fileID: 7317477709908448334}
-  - component: {fileID: 1835935807698726994}
   - component: {fileID: 5943221130622677700}
   - component: {fileID: 8468093006861337787}
-  - component: {fileID: 7909378046307501084}
-  - component: {fileID: 4712869589778229287}
   - component: {fileID: 5203493390424704285}
   - component: {fileID: 5039349239307359560}
   - component: {fileID: 948718058939111011}
   - component: {fileID: 1140909888339262301}
+  - component: {fileID: 2760406909839558489}
+  - component: {fileID: 68820730580027525}
   m_Layer: 8
   m_Name: Spider
   m_TagString: Untagged
@@ -373,6 +466,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5755018170686827275}
+  - {fileID: 7997699724617602894}
   - {fileID: 330482538772977516}
   - {fileID: 5737562046146701280}
   - {fileID: 1294244018544051843}
@@ -406,43 +500,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &5514360316074923580
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211836127877050331}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0.04, y: -0.08}
-  m_Size: {x: 1.75, y: 0.74}
-  m_Direction: 1
 --- !u!114 &7321799632411619486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Scripts.GameObjects.Content.Spider.Spider
   _damage: 1
+  _forceComponent: {fileID: 2760406909839558489}
 --- !u!114 &7317477709908448334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,18 +527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Health
   _maxHealth: 3
---- !u!114 &1835935807698726994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211836127877050331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16615f4fd9aa496686de7e8755045b5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.CollisionComponent
 --- !u!114 &5943221130622677700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,41 +557,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.ExtraGravityComponent
   _gravity: -7
---- !u!114 &7909378046307501084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211836127877050331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9e2de8dc0c14476bb42c80592e91a2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.KnockbackPushComponent
-  _cooldown:
-    _cooldown: 0.25
-    _delay: 0
---- !u!114 &4712869589778229287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9211836127877050331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fda1f972a9e149449fea66f3f36f826b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.PushAbility
-  _firePoint: {fileID: 1294244018544051843}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  _forceX: 10
-  _forceY: 1
-  _radius: 1
-  _distance: 0
 --- !u!114 &5203493390424704285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,6 +611,66 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Damage.DamageComponent
   _damage: 1
+--- !u!114 &2760406909839558489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211836127877050331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8b1cb6afd14f929b83701d9f1d40cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ForceComponent
+  _firePoint: {fileID: 1294244018544051843}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _forceX: 10
+  _forceY: 1
+  _radius: 1
+  _distance: 1
+  _cooldown:
+    _cooldown: 0.25
+    _delay: 0.15
+--- !u!70 &68820730580027525
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9211836127877050331}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.04, y: -0.08}
+  m_Size: {x: 1.75, y: 0.74}
+  m_Direction: 1
 --- !u!1001 &2657911147315956785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -762,7 +833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7458919548120637365, guid: f7bc0bf025fb34cb4ac2bd9999e51ce6, type: 3}
       propertyPath: m_Name
-      value: Spider
+      value: SpiderView
       objectReference: {fileID: 0}
     - target: {fileID: 7458919548120637365, guid: f7bc0bf025fb34cb4ac2bd9999e51ce6, type: 3}
       propertyPath: m_Layer

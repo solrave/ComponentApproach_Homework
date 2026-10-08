@@ -19,12 +19,19 @@ namespace Game
         [SerializeField]
         private Cooldown _cooldown;
         
+        [SerializeField] 
+        private float _force;
+        
         private bool _jumpRequested;
         private ICondition _condition;
         private IAction _action;
+        private Rigidbody2D _body;
 
         public void SetCondition(ICondition condition) => _condition = condition;
         public void SetAction(IAction action) => _action = action;
+        
+        private void OnEnable() 
+            => _body = GetComponent<Rigidbody2D>();
         
         public void Jump()
         {
@@ -40,10 +47,14 @@ namespace Game
             _cooldown.Tick(Time.fixedDeltaTime);
             
             if (!_jumpRequested) return;
-            
+
+            JumpUp();
             _action?.Invoke();
             _jumpRequested = false;
             OnJump?.Invoke();
         }
+
+        private void JumpUp() =>
+            _body.AddForce(Vector2.up * _force, ForceMode2D.Impulse);
     }
 }

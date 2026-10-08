@@ -1,85 +1,75 @@
 using Game;
 using UnityEngine;
 
+public interface ICharacterForceComponent
+{
+    void Push();
+    void Flip();
+}
+
 public class Character : MonoBehaviour,
                          MoveComponent.IAction,
                          MoveComponent.ICondition,
-                         JumpComponent.IAction,
                          JumpComponent.ICondition,
-                         PushComponent.IAction,
-                         PushComponent.ICondition,
-                         FlipComponent.IAction,
-                         FlipComponent.ICondition
+                         ForceComponent.IPushCondition,
+                         ForceComponent.IFlipCondition,
+                         ICharacterForceComponent
 {
+    [SerializeField] 
+    private ForceComponent _pushComponent;
+    
+    [SerializeField] 
+    private ForceComponent _flipComponent;
+    
     private MoveComponent _moveComponent;
     private LookComponent _lookComponent;
-    private CollisionComponent _collisionComponent;
     private HealthComponent _healthComponent;
     private GroundedComponent _groundedComponent;
     private JumpComponent _jumpComponent;
-    private RigidbodyJumpComponent _rigidbodyJumpComponent;
-    private PushComponent _pushComponent;
-    private RigidbodyPushComponent _rigidbodyPushComponent;
-    private FlipComponent _flipComponent;
-    private RigidbodyFlipComponent _rigidbodyFlipComponent;
+    private ForceComponent _forceComponent;
 
     private void Awake()
     {
-        _rigidbodyJumpComponent = GetComponent<RigidbodyJumpComponent>();
+        _forceComponent = GetComponent<ForceComponent>();
         _jumpComponent = GetComponent<JumpComponent>();
-        
         _moveComponent = GetComponent<MoveComponent>();
-
-        _pushComponent = GetComponent<PushComponent>();
-        _rigidbodyPushComponent = GetComponent<RigidbodyPushComponent>();
-        
-        _flipComponent = GetComponent<FlipComponent>();
-        _rigidbodyFlipComponent = GetComponent<RigidbodyFlipComponent>();
-        
         _lookComponent = GetComponent<LookComponent>();
-        _collisionComponent = GetComponent<CollisionComponent>();
         _healthComponent = GetComponent<HealthComponent>();
         _groundedComponent = GetComponent<GroundedComponent>();
         _groundedComponent.SetCondition(() => _healthComponent.IsAlive);
-        
         _moveComponent.SetAction(this);
         _moveComponent.SetCondition(this);
-        
-        _jumpComponent.SetAction(this);
         _jumpComponent.SetCondition(this);
-        
-        _pushComponent.SetAction(this);
-        _pushComponent.SetCondition(this);
-        
-        _flipComponent.SetAction(this);
-        _flipComponent.SetCondition(this);
+        _forceComponent.SetPushCondition(this);
+        _forceComponent.SetFlipCondition(this);
     }
-
+    
     void MoveComponent.IAction.Invoke(Vector2 direction)
         { _lookComponent.Look(direction.x);}
     
     bool MoveComponent.ICondition.Evaluate() 
         => _healthComponent.IsAlive;
-
-    void JumpComponent.IAction.Invoke() 
-        => _rigidbodyJumpComponent.JumpUp();
     
     bool JumpComponent.ICondition.Evaluate() 
         => _healthComponent.IsAlive 
            && _groundedComponent.IsGrounded;
     
-    void PushComponent.IAction.Invoke() 
-        => _rigidbodyPushComponent.PushForward();
-    
-    bool PushComponent.ICondition.Evaluate() 
+    bool ForceComponent.IPushCondition.Evaluate() 
         => _healthComponent.IsAlive 
-           && !_pushComponent.PushRequested;
+           && !_forceComponent.PushAllowed;
     
-    void FlipComponent.IAction.Invoke() 
-        => _rigidbodyFlipComponent.Flip();
-    
-    bool FlipComponent.ICondition.Evaluate() 
+    bool ForceComponent.IFlipCondition.Evaluate() 
         => _healthComponent.IsAlive
            && _groundedComponent.IsGrounded 
-           && !_pushComponent.PushRequested;
+           && !_forceComponent.PushAllowed;
+
+    void ICharacterForceComponent.Push()
+    {
+        _pushComponent.PushForward();
+    }
+
+    void ICharacterForceComponent.Flip()
+    {
+        _flipComponent.FlipUp();
+    }
 }

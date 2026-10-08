@@ -9,8 +9,12 @@ namespace Game
         private HealthComponent _healthComponent;
         private DamageEffectAnimator _damageEffectAnimator;
         private Animator _animator;
-        [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private AudioClip _damageSound;
+        
+        [SerializeField]
+        private AudioSource _audioSource;
+        
+        [SerializeField] 
+        private AudioClip _damageSound;
 
         private void OnEnable()
         {

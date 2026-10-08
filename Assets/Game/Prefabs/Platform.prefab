@@ -165,7 +165,6 @@ GameObject:
   - component: {fileID: 3783390930999802436}
   - component: {fileID: 8787401950944209441}
   - component: {fileID: 8963512734919562917}
-  - component: {fileID: 368911613130954442}
   - component: {fileID: 1893360135191822689}
   - component: {fileID: 2261856424628292975}
   m_Layer: 3
@@ -290,18 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd57bb5e4f3d543a8d08987ef6e2ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveComponent
---- !u!114 &368911613130954442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8655644000359545328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44b4c715012943db9fdf26735a9e7876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.TransformMoveComponent
   _speed: 4.5
 --- !u!114 &1893360135191822689
 MonoBehaviour:

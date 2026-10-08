@@ -1,63 +1,51 @@
-﻿using UnityEngine;
+﻿using Game.Damage;
+using UnityEngine;
 
 namespace Game.Scripts.GameObjects.Content.Snake
 {
     public class Snake : MonoBehaviour,
                         MoveComponent.IAction,
-                        MoveComponent.ICondition,
-                        FlipComponent.IAction,
-                        FlipComponent.ICondition
+                        MoveComponent.ICondition
     {
         [SerializeField]
         private float _damage;
 
+        [SerializeField]
+        private ForceComponent _forceComponent;
+        
         private GameObject _target;
-
         private PatrolComponent _patrolComponent;
         private ChaseComponent _chaseComponent;
         private HealthComponent _healthComponent;
         private LookComponent _lookComponent;
-        
         private MoveComponent _moveComponent;
-        
         private CollisionComponent _collisionComponent;
         private TriggerComponent _triggerComponent;
-        
-        private FlipComponent _flipComponent;
-        private RigidbodyFlipComponent _rigidbodyFlipComponent;
-        
         private GroundedComponent _groundedComponent;
+        private DamageComponent _damageComponent;
+        
 
         private void Awake()
         {
+            _damageComponent = GetComponent<DamageComponent>();
             _patrolComponent = GetComponent<PatrolComponent>();
             _chaseComponent = GetComponent<ChaseComponent>();
             _healthComponent = GetComponent<HealthComponent>();
             _lookComponent = GetComponent<LookComponent>();
-            
             _moveComponent = GetComponent<MoveComponent>();
-            
-            _collisionComponent = GetComponent<CollisionComponent>();
-            _triggerComponent = GetComponent<TriggerComponent>();
-            
-            _flipComponent = GetComponent<FlipComponent>();
-            _rigidbodyFlipComponent = GetComponent<RigidbodyFlipComponent>();
-            
+            _collisionComponent = GetComponentInChildren<CollisionComponent>();
+            _triggerComponent = GetComponentInChildren<TriggerComponent>();
             _groundedComponent = GetComponent<GroundedComponent>();
             _groundedComponent.SetCondition(() => _healthComponent.IsAlive);
-        
             _moveComponent.SetAction(this);
             _moveComponent.SetCondition(this);
-            
-            _flipComponent.SetAction(this);
-            _flipComponent.SetCondition(this);
         }
 
         private void OnEnable()
         {
             _healthComponent.OnDied += this.OnDied;
             _collisionComponent.OnEntered += this.OnCollision;
-            _triggerComponent.OnEntered += this.GetChaseTarget;
+            _triggerComponent.OnEntered += this.SetChaseTarget;
             _triggerComponent.OnExited += this.ReleaseChaseTarget;
         }
 
@@ -65,7 +53,7 @@ namespace Game.Scripts.GameObjects.Content.Snake
         {
             _healthComponent.OnDied -= this.OnDied;
             _collisionComponent.OnEntered -= this.OnCollision;
-            _triggerComponent.OnEntered -= this.GetChaseTarget;
+            _triggerComponent.OnEntered -= this.SetChaseTarget;
             _triggerComponent.OnExited -= this.ReleaseChaseTarget;
         }
         
@@ -91,16 +79,11 @@ namespace Game.Scripts.GameObjects.Content.Snake
 
         private void OnCollision(Collision2D obj)
         {
-            if (obj.collider.TryGetComponent<Character>(out var character))
-                _flipComponent.Flip();
-            
-            if (!obj.collider.TryGetComponent<HealthComponent>(out var health)
-                || !health.IsAlive) return;
-            
-            health.TakeDamage(_damage);
+            _forceComponent.PushKnockback(obj.rigidbody);
+            _damageComponent.Damage(obj);
         }
         
-        private void GetChaseTarget(Collider2D obj)
+        private void SetChaseTarget(Collider2D obj)
         {
             if (obj.TryGetComponent<Character>(out var target))
                 _chaseComponent.SetTarget(target.gameObject);
@@ -117,12 +100,5 @@ namespace Game.Scripts.GameObjects.Content.Snake
         
         bool MoveComponent.ICondition.Evaluate() 
             => _healthComponent.IsAlive;
-
-        void FlipComponent.IAction.Invoke() 
-            => _rigidbodyFlipComponent.Flip();
-        
-        bool FlipComponent.ICondition.Evaluate()
-            => _healthComponent.IsAlive && 
-               _groundedComponent.IsGrounded;
     }
 }

@@ -37,7 +37,8 @@ namespace Game
             if (_condition == null || !_condition())
                 return;
             
-            RaycastHit2D hit = Physics2D.Raycast(_feet.position, Vector2.down, _groundDistance, _layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(_feet.position, 
+                Vector2.down, _groundDistance, _layerMask);
 
             bool grounded = hit;
             if (grounded != _isGrounded)

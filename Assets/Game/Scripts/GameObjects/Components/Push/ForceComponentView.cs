@@ -2,34 +2,49 @@
 
 namespace Game
 {
-    public class PushComponentView : MonoBehaviour
+    public class ForceComponentView : MonoBehaviour
     {
         private int PUSH = Animator.StringToHash("BlowForward");
+        private int FLIP = Animator.StringToHash("BlowUp");
+        
+        [Header("PUSH MODEL")] 
+        [SerializeField]
+        private ForceComponent _pushComponent;
+        
+        [Header("PUSH VIEW")]
+        [SerializeField] 
+        private AudioClip _pushSFX;
+        [SerializeField]
+        private ParticleSystem _pushVFX;
+        
+        [Header("FLIP MODEL")] 
+        [SerializeField]
+        private ForceComponent _flipComponent;
+        
+        [Header("FLIP VIEW")]
+        [SerializeField] 
+        private AudioClip _flipSFX;
+        [SerializeField]
+        private ParticleSystem _flipVFX;
         
         [SerializeField]
         private AudioSource _audioSource;
         
-        [SerializeField] 
-        private AudioClip _pushSFX;
-        
-        [SerializeField]
-        private ParticleSystem _pushVFX;
-        
         private Animator _animator;
-        private RigidbodyPushComponent _rigidbodyPushComponent;
         
         private void OnEnable()
         {
             _animator = GetComponentInChildren<Animator>();
-            _rigidbodyPushComponent = GetComponentInParent<RigidbodyPushComponent>();
-            _rigidbodyPushComponent.OnSinglePush += this.AnimateSinglePush;
-            _rigidbodyPushComponent.OnSidewayPush += this.AnimateSidewayPush;
+            _pushComponent.OnSinglePush += this.AnimateSinglePush;
+            _pushComponent.OnSidewayPush += this.AnimateSidewayPush;
+            _flipComponent.OnFlip += this.AnimateFlip;
         }
 
         private void OnDisable()
         {
-            _rigidbodyPushComponent.OnSinglePush -= this.AnimateSinglePush;
-            _rigidbodyPushComponent.OnSidewayPush -= this.AnimateSidewayPush;
+            _pushComponent.OnSinglePush -= this.AnimateSinglePush;
+            _pushComponent.OnSidewayPush -= this.AnimateSidewayPush;
+            _flipComponent.OnFlip -= this.AnimateFlip;
         }
 
         private void AnimateSinglePush()
@@ -45,8 +60,8 @@ namespace Game
         private void AnimateSidewayPush()
         {
             if (!_pushVFX) return;
-            
-            Vector2 basePos = _rigidbodyPushComponent.transform.position;
+
+            Vector2 basePos = _pushComponent.transform.position;
             
             var vfxPositionRight = new Vector2(basePos.x + 0.5f, basePos.y);
             var vfxPositionLeft = new Vector2(basePos.x - 0.5f, basePos.y);
@@ -59,6 +74,16 @@ namespace Game
             
             Destroy(rightPuff.gameObject, rightPuff.main.duration);
             Destroy(leftPuff.gameObject, leftPuff.main.duration);
+        }
+        
+         private void AnimateFlip()
+        {
+            _animator.SetTrigger(FLIP);
+            
+            if (_flipVFX)
+                _flipVFX.Play();
+            
+            _audioSource.PlayOneShot(_flipSFX);
         }
     }
 }

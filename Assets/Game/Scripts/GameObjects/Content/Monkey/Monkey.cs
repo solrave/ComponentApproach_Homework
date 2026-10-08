@@ -4,9 +4,7 @@ using UnityEngine;
 namespace Game.Scripts.GameObjects.Content.Monkey
 {
     public class Monkey : MonoBehaviour,
-                          PushComponent.IAction,
-                          PushComponent.ICondition,
-                          JumpComponent.IAction,
+                          ForceComponent.IPushCondition,
                           JumpComponent.ICondition
     {
         [SerializeField]
@@ -14,9 +12,7 @@ namespace Game.Scripts.GameObjects.Content.Monkey
         
         private LookComponent _lookComponent;
         private JumpComponent _jumpComponent;
-        private RigidbodyJumpComponent _rigidbodyJumpComponent;
-        private PushComponent _pushComponent;
-        private RigidbodyPushComponent _rigidbodyPushComponent;
+        private ForceComponent _forceComponent;
         private GroundedComponent _groundedComponent;
         private HealthComponent _healthComponent;
         private DamageComponent _damageComponent;
@@ -27,13 +23,9 @@ namespace Game.Scripts.GameObjects.Content.Monkey
             _healthComponent = GetComponent<HealthComponent>();
             _lookComponent = GetComponent<LookComponent>();
             _jumpComponent = GetComponent<JumpComponent>();
-            _rigidbodyJumpComponent = GetComponent<RigidbodyJumpComponent>();
-            _pushComponent = GetComponent<PushComponent>();
-            _rigidbodyPushComponent = GetComponent<RigidbodyPushComponent>();
+            _forceComponent = GetComponent<ForceComponent>();
             _groundedComponent = GetComponent<GroundedComponent>();
-            _pushComponent.SetAction(this);
-            _pushComponent.SetCondition(this);
-            _jumpComponent.SetAction(this);
+            _forceComponent.SetPushCondition(this);
             _jumpComponent.SetCondition(this);
             _groundedComponent.SetCondition(() => _healthComponent.IsAlive);
             _damageComponent = GetComponent<DamageComponent>();
@@ -53,18 +45,14 @@ namespace Game.Scripts.GameObjects.Content.Monkey
         private void Update()
         {
             _jumpComponent.Jump();
-            _pushComponent.Push();
+            _forceComponent.PushSideways();
             _lookComponent.Look(_lookTarget);
         }
         
         private void OnEntered(Collider2D obj) => _damageComponent.Damage(obj);
 
-        void PushComponent.IAction.Invoke() => _rigidbodyPushComponent.PushSideways();
-
-        bool PushComponent.ICondition.Evaluate() => _groundedComponent.IsGrounded;
-
-        void JumpComponent.IAction.Invoke() => _rigidbodyJumpComponent.JumpUp();
-
+        bool ForceComponent.IPushCondition.Evaluate() => _groundedComponent.IsGrounded;
+        
         bool JumpComponent.ICondition.Evaluate() => _groundedComponent.IsGrounded;
     }
 }

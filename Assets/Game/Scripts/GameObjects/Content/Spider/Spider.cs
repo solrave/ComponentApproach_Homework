@@ -6,25 +6,22 @@ namespace Game.Scripts.GameObjects.Content.Spider
     public class Spider : MonoBehaviour,
                           MoveComponent.IAction,
                           MoveComponent.ICondition,
-                          KnockbackPushComponent.IAction,
-                          KnockbackPushComponent.ICondition
+                          ForceComponent.IPushCondition
     {
         [SerializeField] 
         private float _damage;
 
+        [SerializeField] 
+        private ForceComponent _forceComponent;
+
+        private TriggerComponent _triggerComponent;
         private PatrolComponent _patrolComponent;
         private MoveComponent _moveComponent;
         private LookComponent _lookComponent;
         private DamageComponent _damageComponent;
-        
         private CollisionComponent _collisionComponent;
-        private TriggerComponent _triggerComponent;
-        
         private HealthComponent _healthComponent;
         private GroundedComponent _groundedComponent;
-        
-        private KnockbackPushComponent _knockbackPushComponent;
-        private RigidbodyPushComponent _rigidbodyPushComponent;
         
         private void Awake()
         {
@@ -32,37 +29,30 @@ namespace Game.Scripts.GameObjects.Content.Spider
             _moveComponent = GetComponent<MoveComponent>();
             _lookComponent = GetComponent<LookComponent>();
             _damageComponent = GetComponent<DamageComponent>();
-
-            _collisionComponent = GetComponent<CollisionComponent>();
-            _triggerComponent = GetComponent<TriggerComponent>();
-            
+            _collisionComponent = GetComponentInChildren<CollisionComponent>();
+            _triggerComponent = GetComponentInChildren<TriggerComponent>();
             _healthComponent = GetComponent<HealthComponent>();
             _groundedComponent = GetComponent<GroundedComponent>();
-            
-            _knockbackPushComponent = GetComponent<KnockbackPushComponent>();
-            _rigidbodyPushComponent = GetComponent<RigidbodyPushComponent>();
-        
             _groundedComponent.SetCondition(() => _healthComponent.IsAlive);
-        
             _moveComponent.SetAction(this);
             _moveComponent.SetCondition(this);
-            
-            _knockbackPushComponent.SetAction(this);
-            _knockbackPushComponent.SetCondition(this);
+            _forceComponent.SetPushCondition(this);
         }
 
         private void OnEnable()
         {
             _healthComponent.OnDied += this.OnDied;
             _collisionComponent.OnEntered += this.OnCollision;
+            _triggerComponent.OnEntered += this.OnTrigger;
         }
 
         private void OnDisable()
         {
             _healthComponent.OnDied -= this.OnDied;
             _collisionComponent.OnEntered -= this.OnCollision;
+            _triggerComponent.OnEntered -= this.OnTrigger;
         }
-
+        
         private void Update()
         {
             _patrolComponent.UpdateDirection();
@@ -77,24 +67,30 @@ namespace Game.Scripts.GameObjects.Content.Spider
 
         private void OnCollision(Collision2D obj)
         {
+            if (obj.gameObject.layer != LayerMask.NameToLayer("Character"))
+                return;
+            
             if (obj.collider.TryGetComponent<Rigidbody2D>(out var body))
-                _knockbackPushComponent.Push(body);
+                _forceComponent.PushKnockback(body);
 
             _damageComponent.Damage(obj);
         }
-
-        void MoveComponent.IAction.Invoke(Vector2 direction)
+        
+        private void OnTrigger(Collider2D obj)
         {
-            _lookComponent.Look(-direction.x);
+            _damageComponent.Damage(obj);
+            _forceComponent.PushKnockback(obj.attachedRigidbody);
         }
 
-        bool MoveComponent.ICondition.Evaluate() => _healthComponent.IsAlive &&
-                                                    _groundedComponent.IsGrounded;
+        void MoveComponent.IAction.Invoke(Vector2 direction)
+            { _lookComponent.Look(-direction.x); }
 
-        void KnockbackPushComponent.IAction.Invoke(Rigidbody2D target) 
-            => _rigidbodyPushComponent.PushKnockback(target);
+        bool MoveComponent.ICondition.Evaluate() 
+            => _healthComponent.IsAlive &&
+               _groundedComponent.IsGrounded;
 
-        bool KnockbackPushComponent.ICondition.Evaluate()
-            => _healthComponent.IsAlive;
+        bool ForceComponent.IPushCondition.Evaluate()
+            => _healthComponent.IsAlive &&
+               _groundedComponent.IsGrounded;
     }
 }

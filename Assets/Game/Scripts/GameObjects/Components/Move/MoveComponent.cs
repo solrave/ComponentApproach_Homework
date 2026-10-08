@@ -41,8 +41,6 @@ public class MoveComponent : MonoBehaviour
         IsMoving = _moveRequired && _direction != Vector3.zero &&
                    (_condition == null || _condition.Evaluate());
         
-        Debug.Log($"{gameObject.name} ({GetType().Name}): {IsMoving}", this);
-
         if (IsMoving)
         {
             MoveTransform(_direction);
