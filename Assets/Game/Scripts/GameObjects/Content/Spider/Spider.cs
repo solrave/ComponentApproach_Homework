@@ -19,7 +19,6 @@ namespace Game.Scripts.GameObjects.Content.Spider
         private MoveComponent _moveComponent;
         private LookComponent _lookComponent;
         private DamageComponent _damageComponent;
-        private CollisionComponent _collisionComponent;
         private HealthComponent _healthComponent;
         private GroundedComponent _groundedComponent;
         
@@ -29,7 +28,6 @@ namespace Game.Scripts.GameObjects.Content.Spider
             _moveComponent = GetComponent<MoveComponent>();
             _lookComponent = GetComponent<LookComponent>();
             _damageComponent = GetComponent<DamageComponent>();
-            _collisionComponent = GetComponentInChildren<CollisionComponent>();
             _triggerComponent = GetComponentInChildren<TriggerComponent>();
             _healthComponent = GetComponent<HealthComponent>();
             _groundedComponent = GetComponent<GroundedComponent>();
@@ -42,44 +40,28 @@ namespace Game.Scripts.GameObjects.Content.Spider
         private void OnEnable()
         {
             _healthComponent.OnDied += this.OnDied;
-            _collisionComponent.OnEntered += this.OnCollision;
             _triggerComponent.OnEntered += this.OnTrigger;
         }
 
         private void OnDisable()
         {
             _healthComponent.OnDied -= this.OnDied;
-            _collisionComponent.OnEntered -= this.OnCollision;
             _triggerComponent.OnEntered -= this.OnTrigger;
         }
         
         private void Update()
         {
-            _patrolComponent.UpdateDirection();
-            
-            if (_patrolComponent.Direction != Vector2.zero)
-            {
-                _moveComponent.Move(_patrolComponent.Direction);
-            }
+            _patrolComponent.Patrol();
         }
 
         private void OnDied() => Destroy(this.gameObject);
-
-        private void OnCollision(Collision2D obj)
-        {
-            if (obj.gameObject.layer != LayerMask.NameToLayer("Character"))
-                return;
-            
-            if (obj.collider.TryGetComponent<Rigidbody2D>(out var body))
-                _forceComponent.PushKnockback(body);
-
-            _damageComponent.Damage(obj);
-        }
         
         private void OnTrigger(Collider2D obj)
         {
             _damageComponent.Damage(obj);
-            _forceComponent.PushKnockback(obj.attachedRigidbody);
+            
+            if (obj.TryGetComponent<Rigidbody2D>(out var body))
+                _forceComponent.PushKnockback(body);
         }
 
         void MoveComponent.IAction.Invoke(Vector2 direction)

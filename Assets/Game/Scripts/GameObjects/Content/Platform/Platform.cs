@@ -7,7 +7,6 @@ namespace Game
         private MoveComponent _moveComponent;
         private PatrolComponent _patrolComponent;
         private CollisionComponent _collisionComponent;
-        private Transform _load;
 
         private void Awake()
         {
@@ -26,33 +25,27 @@ namespace Game
         {
             _collisionComponent.OnEntered -= this.OnEnter;
             _collisionComponent.OnExited -= this.OnExit;
-            
-            if (_load)
-                _load.SetParent(null);
-            
-            _load = null;
         }
 
         private void Update()
         {
-            _patrolComponent.UpdateDirection();
+            _patrolComponent.Patrol();
             
             if (_patrolComponent.Direction != Vector2.zero)
                 _moveComponent.Move(_patrolComponent.Direction);
         }
         
         private void OnEnter(Collision2D obj)
-        {
-            _load = obj.transform;
-            _load.SetParent(this.transform);
+        { 
+            obj.transform.SetParent(this.transform);
         }
         
         private void OnExit(Collision2D obj)
         {
             if (!obj.transform) return;
-            
-            obj.transform.SetParent(null);
-            _load = null;
+
+            if (Application.isPlaying)
+                obj.transform.SetParent(null);
         }
     }
 }

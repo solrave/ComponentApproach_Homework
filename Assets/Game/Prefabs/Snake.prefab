@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420664732798587865}
   - component: {fileID: 3340947102119108388}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3096521608950002613}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FeetPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4613351096555768162}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,14 +288,13 @@ GameObject:
   - component: {fileID: 5961649425609195253}
   - component: {fileID: 8736527951157677795}
   - component: {fileID: 9126966118980616682}
-  - component: {fileID: 6463772343783145984}
   - component: {fileID: 1907495963969241422}
   - component: {fileID: 6346373845776986585}
   - component: {fileID: 5231134912593493808}
   - component: {fileID: 1344607319280859606}
   - component: {fileID: 5364652829008877294}
   - component: {fileID: 8153916984372218141}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Snake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7246bdb0d9af44fa945f8bed8138ba95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.HealthComponent
-  _maxHealth: 1111
+  _maxHealth: 2
 --- !u!114 &8736527951157677795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,18 +440,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveComponent
   _speed: 1
---- !u!114 &6463772343783145984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6976110413071386817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53bd3481cde748c6a96e2417a23b6532, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.TriggerComponent
 --- !u!114 &1907495963969241422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +629,7 @@ GameObject:
   - component: {fileID: 9208340072981062137}
   - component: {fileID: 5223143791607605825}
   - component: {fileID: 2393643919492979414}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,6 +730,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 481510815356211046, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1378812013146495705, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
       propertyPath: m_LocalScale.x
       value: -1
@@ -791,14 +782,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2633317974209825696, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2984050677123064185, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488370920974311320, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632732737335600970, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426442709402871140, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4795210416434643912, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5234921986400219969, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
       propertyPath: m_Name
       value: Snake
+      objectReference: {fileID: 0}
+    - target: {fileID: 5234921986400219969, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5441492490709981538, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 262a8f8b3a0d84eb6bdf60615bf7816e, type: 2}
+    - target: {fileID: 6068602875091565106, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6550990928911815003, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6922923386231172262, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7089503112692512225, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7516804562272004477, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7695788123550375395, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9158139025116322134, guid: 8de6c8196ff844187a9cfad369c6a805, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

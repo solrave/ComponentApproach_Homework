@@ -118,6 +118,7 @@ namespace Game
             var direction = (obj.position - (Vector2)transform.position).normalized;
             obj.AddForceAtPosition(direction * _force, obj.position, ForceMode2D.Impulse);
             _pushAllowed = false;
+            Debug.Log("Knockbacked!");
         }
 
         public void PushForward()
@@ -145,7 +146,7 @@ namespace Game
         public void PushSideways()
         {
             if (!_pushAllowed) return;
-            
+            Debug.Log("Monkey Push!");
             var RightHits = Physics2D.CircleCastAll(transform.position, _radius,
                                                             _directionRight, _distance);
             

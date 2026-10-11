@@ -14,10 +14,14 @@ namespace Game
 
         private int _currentIndex;
         private Transform _target;
+        private Transform _chaseTarget;
         private bool _hasTargets;
+        private MoveComponent _moveComponent;
+        private Vector3 _offset = new Vector3();
         
         private void Awake()
         {
+            _moveComponent = GetComponent<MoveComponent>();
             _hasTargets = _patrolPoints is not null && _patrolPoints.Length > 0;
             if (_hasTargets)
             {
@@ -33,7 +37,7 @@ namespace Game
             }
         }
 
-        public void UpdateDirection()
+        public void Patrol()
         {
             if (!_hasTargets) 
                 return;
@@ -45,17 +49,28 @@ namespace Game
                 Direction = Vector2.zero;
                 return;
             }
+            
+            if (_chaseTarget)
+                _offset = _chaseTarget.position - this.transform.position;
+            else
+                _offset = _target.position - this.transform.position;
 
-            var offset = _target.position - this.transform.position;
            
-            if (offset.sqrMagnitude <= _stoppingDistance * _stoppingDistance)
+            if (_offset.sqrMagnitude <= _stoppingDistance * _stoppingDistance)
             {
                 _currentIndex = (_currentIndex + 1) % _patrolPoints.Length;
                 Direction = Vector2.zero;
                 return;
             }
 
-            Direction = offset.normalized;
+            Direction = _offset.normalized;
+            _moveComponent.Move(Direction);
         }
+
+        public void SetChaseTarget(Transform target)
+                    => _chaseTarget = target;
+
+        public void ReleaseChaseTarget() 
+                    => _chaseTarget = null;
     }
 }

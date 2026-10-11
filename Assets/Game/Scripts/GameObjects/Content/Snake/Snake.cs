@@ -21,7 +21,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
         
         private GameObject _target;
         private PatrolComponent _patrolComponent;
-        private ChaseComponent _chaseComponent;
         private HealthComponent _healthComponent;
         private LookComponent _lookComponent;
         private MoveComponent _moveComponent;
@@ -33,7 +32,6 @@ namespace Game.Scripts.GameObjects.Content.Snake
         {
             _damageComponent = GetComponent<DamageComponent>();
             _patrolComponent = GetComponent<PatrolComponent>();
-            _chaseComponent = GetComponent<ChaseComponent>();
             _healthComponent = GetComponent<HealthComponent>();
             _lookComponent = GetComponent<LookComponent>();
             _moveComponent = GetComponent<MoveComponent>();
@@ -61,19 +59,7 @@ namespace Game.Scripts.GameObjects.Content.Snake
         
         private void Update()
         {
-            if (_chaseComponent.HasTarget)
-            {
-                Debug.Log($"CHASING");
-                _chaseComponent.UpdateDirection();
-                if (_chaseComponent.Direction != Vector2.zero)
-                    _moveComponent.Move(_chaseComponent.Direction);
-            }
-            else
-            {
-                _patrolComponent.UpdateDirection();
-                if (_patrolComponent.Direction != Vector2.zero)
-                    _moveComponent.Move(_patrolComponent.Direction);
-            }
+            _patrolComponent.Patrol();
         }
 
         private void OnDied() 
@@ -81,20 +67,18 @@ namespace Game.Scripts.GameObjects.Content.Snake
 
         private void OnCollision(Collider2D obj)
         {
-            _forceComponent.PushKnockback(obj.attachedRigidbody);
             _damageComponent.Damage(obj);
+            _forceComponent.PushKnockback(obj.attachedRigidbody);
         }
         
         private void SetChaseTarget(Collider2D obj)
         {
-            if (obj.TryGetComponent<Character>(out var target))
-                _chaseComponent.SetTarget(target.gameObject);
+            _patrolComponent.SetChaseTarget(obj.transform);
         }
         
         private void ReleaseChaseTarget(Collider2D obj)
         {
-            if (obj.TryGetComponent<Character>(out var target))
-                _chaseComponent.SetTarget(null);
+            _patrolComponent.ReleaseChaseTarget();
         }
         
         void MoveComponent.IAction.Invoke(Vector2 direction)
