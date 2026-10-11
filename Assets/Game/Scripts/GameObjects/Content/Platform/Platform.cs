@@ -42,10 +42,7 @@ namespace Game
         
         private void OnExit(Collision2D obj)
         {
-            if (!obj.transform) return;
-
-            if (Application.isPlaying)
-                obj.transform.SetParent(null);
+            obj.transform.SetParent(null);
         }
     }
 }

@@ -118,7 +118,6 @@ namespace Game
             var direction = (obj.position - (Vector2)transform.position).normalized;
             obj.AddForceAtPosition(direction * _force, obj.position, ForceMode2D.Impulse);
             _pushAllowed = false;
-            Debug.Log("Knockbacked!");
         }
 
         public void PushForward()
